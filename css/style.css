@@ -1,16 +1,23 @@
+/* =========================================
+   VARIABEL WARNA & FONT
+   ========================================= */
 :root {
-    --bg-paper: #f9f9f9; /* Putih tulang/kertas */
-    --text-dark: #1a1a1a;
-    --text-light: #cccccc;
-    --accent-yellow: #86bfe4; /* Kuning solid editorial */
-    --accent-grey: #e5e5e5; /* Abu-abu folder */
-    --border-color: #d4d4d4;
+    --bg-paper: #f9f9f9;         /* Putih kertas */
+    --text-dark: #1a1a1a;        /* Teks gelap */
+    --text-light: #cccccc;       /* Teks redup */
+    --accent-blue: #8cbce3;      /* Biru soft untuk hover blok */
+    --accent-grey: #e8e8e8;      /* Abu-abu folder/kertas */
+    --border-color: #d4d4d4;     /* Garis batas */
     
     --font-serif: 'Playfair Display', serif;
     --font-mono: 'Space Mono', monospace;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
 
 body {
     background-color: var(--bg-paper);
@@ -19,7 +26,9 @@ body {
     line-height: 1.5;
 }
 
-/* Tipografi & Garis */
+/* =========================================
+   TIPOGRAFI & GARIS EDITORIAL
+   ========================================= */
 .mono-text {
     font-family: var(--font-mono);
     font-size: 0.75rem;
@@ -40,7 +49,9 @@ body {
     margin: 30px 0;
 }
 
-/* Header */
+/* =========================================
+   HEADER
+   ========================================= */
 .header {
     padding: 60px 30px 20px;
     max-width: 1400px;
@@ -71,7 +82,9 @@ body {
     line-height: 1.8;
 }
 
-/* Tab Navigasi Folder Paper Art */
+/* =========================================
+   NAVIGASI TAB FOLDER (Dengan Hover Biru)
+   ========================================= */
 .category-nav {
     max-width: 1400px;
     margin: 0 auto 40px;
@@ -92,13 +105,15 @@ body {
     font-size: 1.5rem;
     color: var(--text-dark);
     cursor: pointer;
-    /* Membuat efek potongan map kertas di sudut kanan atas */
+    /* Bentuk potongan folder */
     clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
-    transition: background-color 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     min-width: 200px;
+    position: relative;
+    overflow: hidden; /* Kunci blok warna agar tidak keluar bentuk tab */
+    z-index: 1;
 }
 
 .tab-num {
@@ -107,15 +122,27 @@ body {
     margin-bottom: 10px;
 }
 
-.folder-tab:hover {
-    background-color: #d4d4d4;
+/* Blok warna biru yang tersembunyi di bawah */
+.folder-tab::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: var(--accent-blue);
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
 }
 
-.folder-tab.active {
-    background-color: var(--accent-yellow);
+/* Efek slide saat di-hover atau aktif */
+.folder-tab:hover::before, 
+.folder-tab.active::before {
+    transform: translateY(0);
 }
 
-/* Gallery Grid Editorial */
+/* =========================================
+   GALLERY MASONRY & KARTU KARYA
+   ========================================= */
 .main-container {
     max-width: 1400px;
     margin: 0 auto;
@@ -123,38 +150,42 @@ body {
 }
 
 .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 40px;
+    column-count: 3; /* Layout masonry rapat */
+    column-gap: 40px;
 }
 
-/* Card Minimalist dengan Animasi Clean */
 .card {
     text-decoration: none;
     color: var(--text-dark);
     display: flex;
     flex-direction: column;
+    break-inside: avoid; /* Mencegah kartu terpotong antar kolom */
+    margin-bottom: 40px; /* Jarak vertikal */
 }
 
 .card-img-wrapper {
     width: 100%;
-    aspect-ratio: 4/3;
     overflow: hidden;
     background-color: var(--accent-grey);
     margin-bottom: 15px;
 }
 
+/* Ukuran Rasio Dinamis */
+.ratio-landscape { aspect-ratio: 16 / 9; }
+.ratio-portrait  { aspect-ratio: 1 / 1.414; }
+.ratio-social    { aspect-ratio: 9 / 16; }
+.ratio-square    { aspect-ratio: 1 / 1; }
+
 .card-img-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* Animasi zoom out yang sangat rapi dan tidak norak */
-    transform: scale(1.05);
+    transform: scale(1); /* Tampilan awal normal (full gambar) */
     transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .card:hover .card-img-wrapper img {
-    transform: scale(1); /* Efek lensa mundur saat di-hover */
+    transform: scale(1.05); /* Gambar membesar (zoom-in) saat di-hover */
 }
 
 .card-info {
@@ -175,30 +206,13 @@ body {
     text-align: right;
 }
 
-/* Footer */
-.footer {
-    max-width: 1400px;
-    margin: 60px auto 30px;
-    padding: 0 30px;
-    text-align: center;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .top-bar { flex-direction: column; gap: 10px; text-align: center; }
-    .folder-tab { flex: 1 1 100%; min-width: 100%; }
-    .header-content { flex-direction: column; align-items: flex-start; }
-    
-}
 /* =========================================
-   MODAL & SLIDER (PROJECT DETAIL)
+   MODAL & SLIDER DETAIL KARYA
    ========================================= */
 .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     background-color: var(--bg-paper);
     z-index: 999;
     overflow-y: auto;
@@ -221,17 +235,32 @@ body {
     z-index: 10;
 }
 
+/* Tombol Back to Archive (Dengan Hover Biru) */
 .close-btn {
     background: none;
     border: none;
     font-size: 1rem;
     cursor: pointer;
     color: var(--text-dark);
-    transition: color 0.3s;
+    position: relative;
+    padding: 5px 15px;
+    overflow: hidden;
+    z-index: 1;
 }
 
-.close-btn:hover {
-    color: #666;
+.close-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: var(--accent-blue);
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+}
+
+.close-btn:hover::before {
+    transform: translateY(0);
 }
 
 .modal-content {
@@ -243,14 +272,13 @@ body {
     gap: 40px;
 }
 
-/* CSS Native Slider yang sangat ringan */
 .slider-container {
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     gap: 20px;
     padding-bottom: 15px;
-    scrollbar-width: thin; /* Firefox */
+    scrollbar-width: thin;
 }
 
 .slider-container::-webkit-scrollbar {
@@ -282,10 +310,9 @@ body {
     color: var(--text-light);
     margin-top: 10px;
     text-align: right;
-    display: none; /* Akan dimunculkan JS jika gambar > 1 */
+    display: none;
 }
 
-/* Modal Info Text */
 .modal-title {
     font-size: 3rem;
     font-weight: 400;
@@ -303,12 +330,28 @@ body {
     line-height: 1.8;
 }
 
-/* Responsive Modal untuk Mobile */
+/* =========================================
+   FOOTER & RESPONSIVE
+   ========================================= */
+.footer {
+    max-width: 1400px;
+    margin: 60px auto 30px;
+    padding: 0 30px;
+    text-align: center;
+}
+
+@media (max-width: 1024px) { 
+    .gallery-grid { column-count: 2; } 
+}
+
 @media (max-width: 900px) {
-    .modal-content {
-        grid-template-columns: 1fr; /* Tumpuk atas bawah di HP */
-    }
-    .modal-title {
-        font-size: 2.2rem;
-    }
+    .modal-content { grid-template-columns: 1fr; }
+    .modal-title { font-size: 2.2rem; }
+}
+
+@media (max-width: 768px) {
+    .top-bar { flex-direction: column; gap: 10px; text-align: center; }
+    .folder-tab { flex: 1 1 100%; min-width: 100%; }
+    .header-content { flex-direction: column; align-items: flex-start; }
+    .gallery-grid { column-count: 1; }
 }

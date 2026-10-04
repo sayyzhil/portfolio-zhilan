@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Generator Karya Zhilan</title>
+    <style>
+        body { font-family: monospace; background: #f9f9f9; padding: 40px; max-width: 600px; margin: auto; }
+        input, select, textarea { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; font-family: monospace; }
+        button { background: #8cbce3; border: none; padding: 15px; width: 100%; cursor: pointer; font-weight: bold; }
+        .result { background: #1a1a1a; color: #00ff00; padding: 20px; white-space: pre-wrap; margin-top: 20px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h2>ALAT INPUT KARYA (LOKAL)</h2>
+    <label>Judul Karya:</label>
+    <input type="text" id="title" placeholder="Cth: Poster Monpers">
+    
+    <label>Kategori:</label>
+    <select id="category">
+        <option value="projects">Projects (Landscape)</option>
+        <option value="poster">Poster & Ads (A4)</option>
+        <option value="social">Social Media (Portrait)</option>
+        <option value="illustration">Illustration (A4)</option>
+        <option value="logo">Logo (1:1)</option>
+        <option value="mascot">Mascot (1:1)</option>
+        <option value="other">Other</option>
+    </select>
+    
+    <label>Tahun:</label>
+    <input type="text" id="year" value="2026">
+    
+    <label>Nama File Gambar (Pisahkan dengan koma jika lebih dari 1):</label>
+    <input type="text" id="images" placeholder="Cth: poster-1.webp, poster-2.webp">
+    
+    <label>Deskripsi:</label>
+    <textarea id="desc" rows="4"></textarea>
+    
+    <button onclick="generateCode()">BUAT KODE</button>
+    
+    <div id="output" class="result" style="display:none;"></div>
+
+    <script>
+        function generateCode() {
+            const title = document.getElementById('title').value;
+            const category = document.getElementById('category').value;
+            const year = document.getElementById('year').value;
+            const desc = document.getElementById('desc').value;
+            
+            // Proses nama gambar jadi format array
+            const imagesInput = document.getElementById('images').value;
+            const imagesArray = imagesInput.split(',').map(img => `\n        "images/works/${img.trim()}"`).join(',');
+
+            const output = `{
+    title: "${title}",
+    category: "${category}",
+    year: "${year}",
+    images: [${imagesArray}
+    ],
+    description: "${desc}"
+},`;
+            
+            const outDiv = document.getElementById('output');
+            outDiv.style.display = 'block';
+            outDiv.textContent = output;
+        }
+    </script>
+</body>
+</html>

@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const galleryGrid = document.getElementById("gallery-grid");
     const filterButtons = document.querySelectorAll(".folder-tab");
     
-    // Elemen Modal
+    // Elemen Modal (Tetap sama seperti sebelumnya)
     const modal = document.getElementById("project-modal");
     const closeModalBtn = document.getElementById("close-modal");
     const modalSlider = document.getElementById("modal-slider");
@@ -11,6 +11,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalCategory = document.getElementById("modal-category");
     const modalYear = document.getElementById("modal-year");
     const modalDesc = document.getElementById("modal-desc");
+
+    // Pemetaan Class Rasio Sesuai Permintaan
+    function getRatioClass(category) {
+        if (category === 'projects') return 'ratio-landscape';
+        if (category === 'poster' || category === 'illustration') return 'ratio-portrait';
+        if (category === 'social') return 'ratio-social';
+        if (category === 'logo' || category === 'mascot') return 'ratio-square';
+        return 'ratio-landscape'; // Default
+    }
 
     // Render Gallery
     function renderGallery(items) {
@@ -22,12 +31,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         items.forEach(item => {
-            // Ambil gambar pertama sebagai cover (Thumbnail)
             const coverImage = item.images[0]; 
+            const ratioClass = getRatioClass(item.category); // Ambil rasio
             
             const cardHTML = `
                 <div class="card cursor-pointer" data-id="${item.id}" style="cursor: pointer;">
-                    <div class="card-img-wrapper">
+                    <!-- Wrapper ini sekarang punya aspect-ratio sesuai kategori -->
+                    <div class="card-img-wrapper ${ratioClass}">
                         <img src="${coverImage}" alt="${item.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/800x600/e5e5e5/1a1a1a?text=Cover'">
                     </div>
                     <div class="card-info">
@@ -42,7 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
             galleryGrid.insertAdjacentHTML("beforeend", cardHTML);
         });
 
-        // Pasang Event Listener ke setiap Card setelah dirender
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('click', (e) => {
                 const id = parseInt(card.getAttribute('data-id'));
@@ -50,6 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
+
+    // ... (Fungsi openModal, closeModal, dan Filter Logic di bawahnya dibiarkan persis sama seperti sebelumnya) ...
 
     // Buka Modal & Masukkan Data
     function openModal(id) {
