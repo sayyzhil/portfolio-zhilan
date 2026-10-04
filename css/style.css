@@ -1,0 +1,314 @@
+:root {
+    --bg-paper: #f9f9f9; /* Putih tulang/kertas */
+    --text-dark: #1a1a1a;
+    --text-light: #cccccc;
+    --accent-yellow: #86bfe4; /* Kuning solid editorial */
+    --accent-grey: #e5e5e5; /* Abu-abu folder */
+    --border-color: #d4d4d4;
+    
+    --font-serif: 'Playfair Display', serif;
+    --font-mono: 'Space Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--bg-paper);
+    color: var(--text-dark);
+    font-family: var(--font-serif);
+    line-height: 1.5;
+}
+
+/* Tipografi & Garis */
+.mono-text {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dotted-divider {
+    width: 100%;
+    border-top: 1px dotted var(--text-dark);
+    margin: 30px 0;
+}
+
+/* Header */
+.header {
+    padding: 60px 30px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.hero-title {
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+.archive-text {
+    color: var(--text-light);
+}
+
+.hero-desc {
+    max-width: 700px;
+    color: var(--text-dark);
+    line-height: 1.8;
+}
+
+/* Tab Navigasi Folder Paper Art */
+.category-nav {
+    max-width: 1400px;
+    margin: 0 auto 40px;
+    padding: 0 30px;
+}
+
+.tabs-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.folder-tab {
+    background-color: var(--accent-grey);
+    border: none;
+    padding: 15px 30px 15px 15px;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    /* Membuat efek potongan map kertas di sudut kanan atas */
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+    transition: background-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 200px;
+}
+
+.tab-num {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    margin-bottom: 10px;
+}
+
+.folder-tab:hover {
+    background-color: #d4d4d4;
+}
+
+.folder-tab.active {
+    background-color: var(--accent-yellow);
+}
+
+/* Gallery Grid Editorial */
+.main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 40px;
+}
+
+/* Card Minimalist dengan Animasi Clean */
+.card {
+    text-decoration: none;
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-img-wrapper {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background-color: var(--accent-grey);
+    margin-bottom: 15px;
+}
+
+.card-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Animasi zoom out yang sangat rapi dan tidak norak */
+    transform: scale(1.05);
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.card:hover .card-img-wrapper img {
+    transform: scale(1); /* Efek lensa mundur saat di-hover */
+}
+
+.card-info {
+    border-top: 1px dotted var(--border-color);
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    max-width: 70%;
+}
+
+.card-category {
+    text-align: right;
+}
+
+/* Footer */
+.footer {
+    max-width: 1400px;
+    margin: 60px auto 30px;
+    padding: 0 30px;
+    text-align: center;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .top-bar { flex-direction: column; gap: 10px; text-align: center; }
+    .folder-tab { flex: 1 1 100%; min-width: 100%; }
+    .header-content { flex-direction: column; align-items: flex-start; }
+    
+}
+/* =========================================
+   MODAL & SLIDER (PROJECT DETAIL)
+   ========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-paper);
+    z-index: 999;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-header {
+    padding: 20px 30px;
+    border-bottom: 1px dotted var(--border-color);
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-paper);
+    z-index: 10;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    color: var(--text-dark);
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #666;
+}
+
+.modal-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 30px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+}
+
+/* CSS Native Slider yang sangat ringan */
+.slider-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding-bottom: 15px;
+    scrollbar-width: thin; /* Firefox */
+}
+
+.slider-container::-webkit-scrollbar {
+    height: 6px;
+}
+.slider-container::-webkit-scrollbar-track {
+    background: var(--accent-grey);
+}
+.slider-container::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+}
+
+.slide-item {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    background-color: var(--accent-grey);
+}
+
+.slide-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    max-height: 75vh;
+}
+
+.scroll-hint {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    margin-top: 10px;
+    text-align: right;
+    display: none; /* Akan dimunculkan JS jika gambar > 1 */
+}
+
+/* Modal Info Text */
+.modal-title {
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 15px;
+}
+
+.modal-meta {
+    margin-bottom: 30px;
+    color: #666;
+}
+
+.modal-desc {
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+/* Responsive Modal untuk Mobile */
+@media (max-width: 900px) {
+    .modal-content {
+        grid-template-columns: 1fr; /* Tumpuk atas bawah di HP */
+    }
+    .modal-title {
+        font-size: 2.2rem;
+    }
+}

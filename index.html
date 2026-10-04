@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZHILAN — Works Archive</title>
+    
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    
+    <!-- Google Fonts: Playfair Display (Serif) & Space Mono (Mesin Tik) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Top Navigation Border -->
+    <div class="top-bar">
+        <span class="mono-text">PORTFOLIO</span>
+        <span class="mono-text">M. SAYYID ZHILAN H.</span>
+        <span class="mono-text">2026</span>
+    </div>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="hero-title">Works</h1>
+            <h1 class="hero-title archive-text">Archive</h1>
+        </div>
+        <div class="dotted-divider"></div>
+        <p class="hero-desc mono-text">
+            I'M A MULTIDISCIPLINARY DESIGNER. MY WORK BLENDS VISUAL IDENTITIES, ILLUSTRATION, AND DIGITAL EXPERIENCES ACROSS DIFFERENT MEDIUMS.
+        </p>
+    </header>
+
+    <!-- Folder Tabs Navigation -->
+    <nav class="category-nav">
+        <div class="tabs-container" id="filter-container">
+            <!-- Bentuk tab meniru potongan folder kertas -->
+            <button class="folder-tab active" data-category="all">
+                <span class="tab-num">00</span> ALL WORKS
+            </button>
+            <button class="folder-tab" data-category="projects">
+                <span class="tab-num">01</span> PROJECTS
+            </button>
+            <button class="folder-tab" data-category="poster">
+                <span class="tab-num">02</span> POSTER & ADS
+            </button>
+            <button class="folder-tab" data-category="social">
+                <span class="tab-num">03</span> SOCIAL MEDIA
+            </button>
+            <button class="folder-tab" data-category="illustration">
+                <span class="tab-num">04</span> ILLUSTRATION
+            </button>
+            <button class="folder-tab" data-category="logo">
+                <span class="tab-num">05</span> LOGO
+            </button>
+            <button class="folder-tab" data-category="mascot">
+                <span class="tab-num">06</span> MASCOT
+            </button>
+            <button class="folder-tab" data-category="other">
+                <span class="tab-num">07</span> OTHER
+            </button>
+        </div>
+    </nav>
+
+    <!-- Gallery Section -->
+    <main class="main-container">
+        <div class="gallery-grid" id="gallery-grid">
+            <!-- Data dirender dari JS -->
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="dotted-divider"></div>
+        <p class="mono-text">&copy; 2026 ZHILAN. ALL RIGHTS RESERVED.</p>
+        <!-- ... (kode main container gallery yang sudah ada) ... -->
+    </main>
+
+    <!-- Project Detail Modal (Hidden by default) -->
+    <div id="project-modal" class="modal-overlay">
+        <div class="modal-header">
+            <button id="close-modal" class="mono-text close-btn">← BACK TO ARCHIVE</button>
+        </div>
+        <div class="modal-content">
+            <!-- Bagian Kiri/Atas: Slider Gambar -->
+            <div class="modal-gallery">
+                <div id="modal-slider" class="slider-container">
+                    <!-- Gambar akan di-inject lewat JS -->
+                </div>
+                <div class="scroll-hint mono-text" id="scroll-hint">SWIPE TO SEE MORE →</div>
+            </div>
+            
+            <!-- Bagian Kanan/Bawah: Teks Deskripsi -->
+            <div class="modal-info">
+                <div class="dotted-divider" style="margin-top:0;"></div>
+                <h2 id="modal-title" class="modal-title">Project Title</h2>
+                <div class="modal-meta mono-text">
+                    <span id="modal-category">CATEGORY</span> | <span id="modal-year">2026</span>
+                </div>
+                <p id="modal-desc" class="modal-desc">
+                    Project description goes here.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+<!-- ... (lanjutan kode footer yang sudah ada) ... -->
+    </footer>
+
+    <script src="js/works-data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
